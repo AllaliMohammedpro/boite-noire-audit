@@ -1,0 +1,25 @@
+Vagrant.configure("2") do |config|
+  # Box officielle Ubuntu 22.04 LTS (sera téléchargée dans D:\vagrant.d)
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.hostname = "audit-vm"
+
+  # Configuration matérielle dans VirtualBox
+ config.vm.provider "virtualbox" do |vb|
+  vb.memory = 6656
+  vb.cpus = 3
+  vb.name = "boite-noire-audit-vm"
+end
+
+  # Réseau privé avec IP statique pour le cluster
+  config.vm.network "private_network", ip: "192.168.56.10"
+
+  # Redirection de ports vers votre machine Windows (hôte)
+  config.vm.network "forwarded_port", guest: 6443, host: 6443  # API Kubernetes K3s
+  config.vm.network "forwarded_port", guest: 3000, host: 3000  # Interface Grafana
+  config.vm.network "forwarded_port", guest: 5601, host: 5601  # Interface Kibana
+
+  # Installation automatique de K3s au démarrage
+  config.vm.provision "shell", inline: <<-SHELL
+    curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+  SHELL
+end

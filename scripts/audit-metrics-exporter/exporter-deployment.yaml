@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audit-exporter
+  namespace: monitoring
+  labels:
+    app: audit-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audit-exporter
+  template:
+    metadata:
+      labels:
+        app: audit-exporter
+    spec:
+      containers:
+        - name: audit-exporter
+          image: python:3.11-slim
+          command: ["sh", "-c"]
+          args:
+                - "pip install --no-cache-dir elasticsearch==8.15.1 prometheus_client && python -u /app/exporter.py"
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: script
+              mountPath: /app
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 150m
+              memory: 200Mi
+      volumes:
+        - name: script
+          configMap:
+            name: audit-exporter-script
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: audit-exporter
+  namespace: monitoring
+  labels:
+    app: audit-exporter
+spec:
+  selector:
+    app: audit-exporter
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: metrics

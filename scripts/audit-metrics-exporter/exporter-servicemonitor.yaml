@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: audit-exporter
+  namespace: monitoring
+  labels:
+    release: audit-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: audit-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  endpoints:
+    - port: metrics
+      interval: 30s

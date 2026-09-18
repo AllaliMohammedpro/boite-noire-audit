@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: audit-sla-rules
+  namespace: monitoring
+  labels:
+    release: audit-monitoring
+spec:
+  groups:
+    - name: sla-drift
+      rules:
+        - alert: SLAAvailabilityDrift
+          expr: up{job=~".*kafka.*|.*elasticsearch.*|audit-exporter"} == 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Derive SLA detectee : composant indisponible"
+
+    - name: unauthorized-access
+      rules:
+        - alert: UnauthorizedAccessSpike
+          expr: audit_access_denied_total_5min > 5
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pic d'acces refuses detecte sur les 5 dernieres minutes"

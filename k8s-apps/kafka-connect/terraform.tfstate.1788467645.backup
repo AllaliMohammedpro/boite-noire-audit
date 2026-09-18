@@ -1,0 +1,358 @@
+{
+  "version": 4,
+  "terraform_version": "1.15.9",
+  "serial": 4,
+  "lineage": "a12c602c-00f0-02ef-e958-8f02ba329d64",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "kubernetes_deployment",
+      "name": "kafka_connect",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "status": "tainted",
+          "schema_version": 1,
+          "attributes": {
+            "id": "audit-connect/kafka-connect",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 0,
+                "labels": null,
+                "name": "kafka-connect",
+                "namespace": "audit-connect",
+                "resource_version": "",
+                "uid": ""
+              }
+            ],
+            "spec": [
+              {
+                "min_ready_seconds": 0,
+                "paused": false,
+                "progress_deadline_seconds": 600,
+                "replicas": "1",
+                "revision_history_limit": 10,
+                "selector": [
+                  {
+                    "match_expressions": [],
+                    "match_labels": {
+                      "app": "kafka-connect"
+                    }
+                  }
+                ],
+                "strategy": [],
+                "template": [
+                  {
+                    "metadata": [
+                      {
+                        "annotations": null,
+                        "generate_name": "",
+                        "generation": 0,
+                        "labels": {
+                          "app": "kafka-connect"
+                        },
+                        "name": "",
+                        "namespace": "",
+                        "resource_version": "",
+                        "uid": ""
+                      }
+                    ],
+                    "spec": [
+                      {
+                        "active_deadline_seconds": 0,
+                        "affinity": [],
+                        "automount_service_account_token": true,
+                        "container": [
+                          {
+                            "args": null,
+                            "command": null,
+                            "env": [
+                              {
+                                "name": "CONNECT_BOOTSTRAP_SERVERS",
+                                "value": "audit-kafka-controller-0.audit-kafka-controller-headless.audit-kafka.svc.cluster.local:9092",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_GROUP_ID",
+                                "value": "audit-connect-cluster",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_CONFIG_STORAGE_TOPIC",
+                                "value": "connect-configs",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_OFFSET_STORAGE_TOPIC",
+                                "value": "connect-offsets",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_STATUS_STORAGE_TOPIC",
+                                "value": "connect-status",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR",
+                                "value": "1",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR",
+                                "value": "1",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_STATUS_STORAGE_REPLICATION_FACTOR",
+                                "value": "1",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_KEY_CONVERTER",
+                                "value": "org.apache.kafka.connect.json.JsonConverter",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_VALUE_CONVERTER",
+                                "value": "org.apache.kafka.connect.json.JsonConverter",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE",
+                                "value": "false",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE",
+                                "value": "false",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_REST_ADVERTISED_HOST_NAME",
+                                "value": "kafka-connect",
+                                "value_from": []
+                              },
+                              {
+                                "name": "CONNECT_PLUGIN_PATH",
+                                "value": "/usr/share/java,/usr/share/confluent-hub-components",
+                                "value_from": []
+                              }
+                            ],
+                            "env_from": [],
+                            "image": "confluentinc/cp-kafka-connect:7.6.0",
+                            "image_pull_policy": "",
+                            "lifecycle": [],
+                            "liveness_probe": [],
+                            "name": "kafka-connect",
+                            "port": [
+                              {
+                                "container_port": 8083,
+                                "host_ip": "",
+                                "host_port": 0,
+                                "name": "",
+                                "protocol": "TCP"
+                              }
+                            ],
+                            "readiness_probe": [],
+                            "resources": [
+                              {
+                                "limits": {
+                                  "cpu": "800m",
+                                  "memory": "1Gi"
+                                },
+                                "requests": {
+                                  "cpu": "300m",
+                                  "memory": "768Mi"
+                                }
+                              }
+                            ],
+                            "security_context": [],
+                            "startup_probe": [],
+                            "stdin": false,
+                            "stdin_once": false,
+                            "termination_message_path": "/dev/termination-log",
+                            "termination_message_policy": "",
+                            "tty": false,
+                            "volume_device": [],
+                            "volume_mount": [],
+                            "working_dir": ""
+                          }
+                        ],
+                        "dns_config": [],
+                        "dns_policy": "ClusterFirst",
+                        "enable_service_links": true,
+                        "host_aliases": [],
+                        "host_ipc": false,
+                        "host_network": false,
+                        "host_pid": false,
+                        "hostname": "",
+                        "image_pull_secrets": [],
+                        "init_container": [],
+                        "node_name": "",
+                        "node_selector": null,
+                        "os": [],
+                        "priority_class_name": "",
+                        "readiness_gate": [],
+                        "restart_policy": "Always",
+                        "runtime_class_name": "",
+                        "scheduler_name": "",
+                        "security_context": [],
+                        "service_account_name": "",
+                        "share_process_namespace": false,
+                        "subdomain": "",
+                        "termination_grace_period_seconds": 30,
+                        "toleration": [],
+                        "topology_spread_constraint": [],
+                        "volume": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "timeouts": null,
+            "wait_for_rollout": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": null,
+            "kind": null,
+            "name": null,
+            "namespace": null
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "kubernetes_namespace.connect"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "kubernetes_namespace",
+      "name": "connect",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "audit-connect",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 0,
+                "labels": null,
+                "name": "audit-connect",
+                "resource_version": "17151",
+                "uid": "1631ac81-1c48-4cc1-ad4c-45e75470734d"
+              }
+            ],
+            "timeouts": null,
+            "wait_for_default_service_account": false
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "v1",
+            "kind": "Namespace",
+            "name": "audit-connect"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjozMDAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "kubernetes_service",
+      "name": "kafka_connect",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "id": "audit-connect/kafka-connect",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 0,
+                "labels": null,
+                "name": "kafka-connect",
+                "namespace": "audit-connect",
+                "resource_version": "17156",
+                "uid": "3c320c9f-dac2-4ff2-99e8-d43b3c9a2e6d"
+              }
+            ],
+            "spec": [
+              {
+                "allocate_load_balancer_node_ports": true,
+                "cluster_ip": "10.43.185.187",
+                "cluster_ips": [
+                  "10.43.185.187"
+                ],
+                "external_ips": null,
+                "external_name": "",
+                "external_traffic_policy": "Cluster",
+                "health_check_node_port": 0,
+                "internal_traffic_policy": "Cluster",
+                "ip_families": [
+                  "IPv4"
+                ],
+                "ip_family_policy": "SingleStack",
+                "load_balancer_class": "",
+                "load_balancer_ip": "",
+                "load_balancer_source_ranges": null,
+                "port": [
+                  {
+                    "app_protocol": "",
+                    "name": "",
+                    "node_port": 30519,
+                    "port": 8083,
+                    "protocol": "TCP",
+                    "target_port": "8083"
+                  }
+                ],
+                "publish_not_ready_addresses": false,
+                "selector": {
+                  "app": "kafka-connect"
+                },
+                "session_affinity": "None",
+                "session_affinity_config": [],
+                "type": "NodePort"
+              }
+            ],
+            "status": [
+              {
+                "load_balancer": [
+                  {
+                    "ingress": []
+                  }
+                ]
+              }
+            ],
+            "timeouts": null,
+            "wait_for_load_balancer": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "v1",
+            "kind": "Service",
+            "name": "kafka-connect",
+            "namespace": "audit-connect"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "kubernetes_namespace.connect"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

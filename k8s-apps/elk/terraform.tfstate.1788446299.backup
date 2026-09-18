@@ -1,0 +1,217 @@
+{
+  "version": 4,
+  "terraform_version": "1.15.9",
+  "serial": 9,
+  "lineage": "09a0a2c6-7197-0b97-d054-d2c40e9bcea7",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "elasticsearch",
+      "provider": "provider[\"registry.terraform.io/hashicorp/helm\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "atomic": false,
+            "chart": "elasticsearch",
+            "cleanup_on_fail": false,
+            "create_namespace": false,
+            "dependency_update": false,
+            "description": null,
+            "devel": null,
+            "disable_crd_hooks": false,
+            "disable_openapi_validation": false,
+            "disable_webhooks": false,
+            "force_update": false,
+            "id": "audit-es",
+            "keyring": null,
+            "lint": false,
+            "manifest": null,
+            "max_history": 0,
+            "metadata": [
+              {
+                "app_version": "8.5.1",
+                "chart": "elasticsearch",
+                "first_deployed": 1788442729,
+                "last_deployed": 1788442729,
+                "name": "audit-es",
+                "namespace": "audit-elk",
+                "notes": "1. Watch all cluster members come up.\n  $ kubectl get pods --namespace=audit-elk -l app=elasticsearch-master -w\n2. Retrieve elastic user's password.\n  $ kubectl get secrets --namespace=audit-elk elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d\n3. Test cluster health using Helm test.\n  $ helm --namespace=audit-elk test audit-es",
+                "revision": 1,
+                "values": "{\"esConfig\":{\"elasticsearch.yml\":\"xpack.security.enabled: false\\n\"},\"esJavaOpts\":\"-Xmx768m -Xms768m\",\"replicas\":1,\"resources\":{\"limits\":{\"cpu\":\"1000m\",\"memory\":\"1.5Gi\"},\"requests\":{\"cpu\":\"500m\",\"memory\":\"1.5Gi\"}},\"volumeClaimTemplate\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"10Gi\"}}}}",
+                "version": "8.5.1"
+              }
+            ],
+            "name": "audit-es",
+            "namespace": "audit-elk",
+            "pass_credentials": false,
+            "postrender": [],
+            "recreate_pods": false,
+            "render_subchart_notes": true,
+            "replace": false,
+            "repository": "https://helm.elastic.co",
+            "repository_ca_file": null,
+            "repository_cert_file": null,
+            "repository_key_file": null,
+            "repository_password": null,
+            "repository_username": null,
+            "reset_values": false,
+            "reuse_values": false,
+            "set": [],
+            "set_list": [],
+            "set_sensitive": [],
+            "skip_crds": false,
+            "status": "deployed",
+            "timeout": 1200,
+            "upgrade_install": null,
+            "values": [
+              "replicas: 1\r\n\r\nesConfig:\r\n  elasticsearch.yml: |\r\n    xpack.security.enabled: false\r\n\r\nresources:\r\n  requests:\r\n    cpu: \"500m\"\r\n    memory: \"1.5Gi\"\r\n  limits:\r\n    cpu: \"1000m\"\r\n    memory: \"1.5Gi\"\r\n\r\nesJavaOpts: \"-Xmx768m -Xms768m\"\r\n\r\nvolumeClaimTemplate:\r\n  accessModes: [\"ReadWriteOnce\"]\r\n  resources:\r\n    requests:\r\n      storage: 10Gi"
+            ],
+            "verify": false,
+            "version": "8.5.1",
+            "wait": true,
+            "wait_for_jobs": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "repository_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "kubernetes_namespace.elk"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "kibana",
+      "provider": "provider[\"registry.terraform.io/hashicorp/helm\"]",
+      "instances": [
+        {
+          "status": "tainted",
+          "schema_version": 1,
+          "attributes": {
+            "atomic": false,
+            "chart": "kibana",
+            "cleanup_on_fail": false,
+            "create_namespace": false,
+            "dependency_update": false,
+            "description": null,
+            "devel": null,
+            "disable_crd_hooks": false,
+            "disable_openapi_validation": false,
+            "disable_webhooks": false,
+            "force_update": false,
+            "id": "audit-kibana",
+            "keyring": null,
+            "lint": false,
+            "manifest": null,
+            "max_history": 0,
+            "metadata": [
+              {
+                "app_version": "8.5.1",
+                "chart": "kibana",
+                "first_deployed": 1788443256,
+                "last_deployed": 1788443256,
+                "name": "audit-kibana",
+                "namespace": "audit-elk",
+                "notes": "1. Watch all containers come up.\n  $ kubectl get pods --namespace=audit-elk -l release=audit-kibana -w\n2. Retrieve the elastic user's password.\n  $ kubectl get secrets --namespace=audit-elk elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d\n3. Retrieve the kibana service account token.\n  $ kubectl get secrets --namespace=audit-elk audit-kibana-kibana-es-token -ojsonpath='{.data.token}' | base64 -d\n",
+                "revision": 1,
+                "values": "{\"elasticsearchHosts\":\"http://audit-es-master:9200\",\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"1Gi\"},\"requests\":{\"cpu\":\"250m\",\"memory\":\"512Mi\"}},\"service\":{\"nodePort\":30561,\"type\":\"NodePort\"}}",
+                "version": "8.5.1"
+              }
+            ],
+            "name": "audit-kibana",
+            "namespace": "audit-elk",
+            "pass_credentials": false,
+            "postrender": [],
+            "recreate_pods": false,
+            "render_subchart_notes": true,
+            "replace": false,
+            "repository": "https://helm.elastic.co",
+            "repository_ca_file": null,
+            "repository_cert_file": null,
+            "repository_key_file": null,
+            "repository_password": null,
+            "repository_username": null,
+            "reset_values": false,
+            "reuse_values": false,
+            "set": [],
+            "set_list": [],
+            "set_sensitive": [],
+            "skip_crds": false,
+            "status": "failed",
+            "timeout": 1200,
+            "upgrade_install": null,
+            "values": [
+              "elasticsearchHosts: \"http://audit-es-master:9200\"\r\n\r\nresources:\r\n  requests:\r\n    cpu: \"250m\"\r\n    memory: \"512Mi\"\r\n  limits:\r\n    cpu: \"500m\"\r\n    memory: \"1Gi\"\r\n\r\nservice:\r\n  type: NodePort\r\n  nodePort: 30561"
+            ],
+            "verify": false,
+            "version": "8.5.1",
+            "wait": true,
+            "wait_for_jobs": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "repository_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "helm_release.elasticsearch",
+            "kubernetes_namespace.elk"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "kubernetes_namespace",
+      "name": "elk",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "audit-elk",
+            "metadata": [
+              {
+                "annotations": {},
+                "generate_name": "",
+                "generation": 0,
+                "labels": {},
+                "name": "audit-elk",
+                "resource_version": "5889",
+                "uid": "15c6010e-8ff0-43d0-9ec4-eb1f89c63563"
+              }
+            ],
+            "timeouts": null,
+            "wait_for_default_service_account": false
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "v1",
+            "kind": "Namespace",
+            "name": "audit-elk"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjozMDAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
