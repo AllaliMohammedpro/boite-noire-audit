@@ -10,7 +10,17 @@
 # Kubeconfig et certificats
 *.crt
 *.jks
+*.pem
+*.key
 audit-vm-config
+
+# Python
+**/venv/
+**/__pycache__/
+**/*.pyc
+
+# Fichiers temporaires de travail
+replicas.json
 
 # Divers
 *.log
