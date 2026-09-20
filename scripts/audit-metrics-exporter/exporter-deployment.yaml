@@ -21,8 +21,15 @@ spec:
           command: ["sh", "-c"]
           args:
                 - "pip install --no-cache-dir elasticsearch==8.15.1 prometheus_client && python -u /app/exporter.py"
+          env:
+            - name: ES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: audit-exporter-es-credentials
+                  key: ES_PASSWORD
           ports:
             - containerPort: 8000
+         
           volumeMounts:
             - name: script
               mountPath: /app

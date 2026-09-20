@@ -5,7 +5,8 @@ from prometheus_client import start_http_server, Gauge
 # Authentification (sécurité activée en Phase 4 - voir Erreur 3 / secret elasticsearch-master-credentials)
 ES_HOST = "https://elasticsearch-master.audit-elk.svc.cluster.local:9200"   # via kubectl port-forward
 ES_USER = "elastic"
-ES_PASSWORD = "21pCDzz6KKL8zWFo"     # à sécuriser plus tard (variable d'env, secret K8s)
+import os
+ES_PASSWORD = os.environ.get("ES_PASSWORD", "changeme")     # à sécuriser plus tard (variable d'env, secret K8s)
 
 es = Elasticsearch(
     ES_HOST,

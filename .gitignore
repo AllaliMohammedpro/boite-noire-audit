@@ -13,6 +13,7 @@
 *.pem
 *.key
 audit-vm-config
+ca_base64.txt
 
 # Python
 **/venv/

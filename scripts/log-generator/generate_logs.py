@@ -7,8 +7,7 @@ from faker import Faker
 
 fake = Faker()
 
-# Adapter selon l'exposition Kafka depuis l'hote (port-forward ou NodePort)
-KAFKA_BOOTSTRAP_SERVERS = ["localhost:9094"]
+KAFKA_BOOTSTRAP_SERVERS = ["audit-kafka-controller-0.audit-kafka-controller-headless.audit-kafka.svc.cluster.local:9092"]
 TOPIC = "audit-logs-5w"
 
 USERS = ["admin_prestataire", "support_n1", "support_n2", "dba_prestataire", "ops_lead"]
@@ -55,8 +54,12 @@ def main():
     try:
         while True:
             entry = generate_log_entry()
-            producer.send(TOPIC, value=entry)
-            print(f"Envoye : {entry['who']} -> {entry['what']} ({entry['status']})")
+            future = producer.send(TOPIC, value=entry)
+            try:
+                future.get(timeout=10)
+                print(f"Envoye (confirme) : {entry['who']} -> {entry['what']} ({entry['status']})")
+            except Exception as e:
+                print(f"ECHEC envoi : {e}")
             time.sleep(random.uniform(0.5, 2))
     except KeyboardInterrupt:
         print("\nArret du generateur.")
@@ -66,4 +69,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
